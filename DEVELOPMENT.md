@@ -46,6 +46,7 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/en/
 - `just typecheck` - Type checking
 - `just test` / `just test-cov` - Testing
 - `just convert <file>` - Convert text to audiobook
+- `just web` - Start web interface server
 - `just build` - Build the package
 - `just clean` - Clean build artifacts
 
@@ -79,6 +80,11 @@ just run list-voices --language en
 
 # Generate audio previews
 just run preview test_input.txt --segments 3
+
+# Start web interface
+just web
+# or with custom port
+just run web --port 8080
 ```
 
 ## 🔧 Development Workflow
