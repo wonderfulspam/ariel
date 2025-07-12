@@ -118,3 +118,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Ignore audio files in samples
+samples/*.mp3

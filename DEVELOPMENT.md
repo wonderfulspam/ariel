@@ -151,3 +151,65 @@ bun run test:debug   # Debug tests step by step
 - `src/ariel/core/interfaces.py` - Abstract base classes
 - `src/ariel/core/factory.py` - Component factory
 - `src/ariel/cli.py` - Command-line interface
+
+## Technical Foundation
+## Technical Foundation
+
+### Language and Runtime
+
+- **Python 3.12**: Latest stable version with good ecosystem support
+  - Pattern matching (match/case) for cleaner code
+  - Better error messages
+  - Performance improvements
+  - Avoid 3.13 until libraries catch up
+
+### Development Tools
+
+- **Package Manager**: `uv` instead of pip
+  - Faster dependency resolution
+  - Better reproducible builds
+  - Single tool for venv and package management
+- **Project Structure**: Modern Python with `pyproject.toml`
+- **Type Hints**: Full type annotations with `mypy` for validation
+- **Formatting**: `ruff` for linting and formatting (faster than black+flake8)
+
+### Key Libraries
+
+- **CLI**: `typer` - Type-hint based CLI framework
+- **Async**: `asyncio` + `aiofiles` for concurrent operations
+- **Audio**: `pydub` + `ffmpeg` for audio processing
+- **TTS**: `edge-tts` for primary implementation
+- **HTTP**: `httpx` for async API calls
+- **Config**: `pydantic` + `pydantic-settings` for configuration
+- **Progress**: `rich` for beautiful terminal output
+- **Testing**: `pytest` + `pytest-asyncio`
+
+### Project Structure
+```
+ariel/
+├── pyproject.toml          # Modern Python project file
+├── uv.lock                 # Lock file from uv
+├── README.md
+├── src/
+│   └── ariel/
+│       ├── __init__.py
+│       ├── __main__.py     # Entry point
+│       ├── cli.py          # Typer CLI definition
+│       ├── models.py       # Pydantic models
+│       ├── core/
+│       ├── parsers/
+│       ├── analyzers/
+│       ├── generators/
+│       └── compilers/
+└── tests/
+```
+
+### Code Style Decisions
+
+- Use async/await throughout for better concurrency
+- Pydantic models for all data structures
+- Abstract base classes using Python's `abc` module
+- Dependency injection for swappable components
+- Rich exceptions with helpful error messages
+
+---
