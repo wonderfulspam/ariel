@@ -31,9 +31,28 @@ This project uses pre-commit hooks to ensure code quality. The hooks automatical
 - `just pre-commit-install` - Install pre-commit hooks
 - `just pre-commit-update` - Update hook versions
 
-### Conventional Commits
+### Version Control with Jujutsu (jj)
 
-This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). All commit messages should adhere to this specification to maintain a clear and descriptive version history.
+This project uses **Jujutsu (jj)** instead of Git for version control. Jj is a Git-compatible VCS with these key concepts:
+
+- **Every change is a commit** - No staging area, working copy changes are automatically tracked
+- **Branches are just pointers to commits** - Simpler mental model than Git
+- **Atomic commits** - Each logical change should be its own commit
+- **Edit history directly** - Use `jj edit` to fix issues in previous commits rather than creating "fix" commits
+
+**Essential jj commands**:
+- `jj status` - Show working copy status
+- `jj new` - Create a new change and start working on it
+- `jj describe --message "msg"` - Set commit message for current change
+- `jj commit --message "msg"` - Commit with message (preferred for automation)
+- `jj log` - Show the commit graph
+- `jj edit <revision>` - Edit a previous commit directly
+- `jj squash` - Squash changes into parent commit
+
+**Best practices**:
+- Always use non-interactive flags: `--message`, `--no-edit`, etc.
+- Prefer `jj commit` over `jj describe` for automation
+- Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for all commit messages
 
 ### Available Commands
 - `just help` - Show all available commands
@@ -112,11 +131,13 @@ bun run test:debug   # Debug tests step by step
 
 ## 🔧 Development Workflow
 
-1. Make code changes
-2. Run `just check` to verify everything passes
-3. Test functionality with `just run <command>`
-4. Use `just format` to ensure consistent formatting
-5. Commit changes when ready
+1. Start new work: `jj new` (creates new change)
+2. Make code changes
+3. Run `just check` to verify everything passes
+4. Test functionality with `just run <command>`
+5. Use `just format` to ensure consistent formatting
+6. Commit atomic change: `jj commit --message "feat: your change description"`
+7. For fixes to previous commits: `jj edit <revision>` then make changes
 
 ## ⚠️ Known Issues
 
