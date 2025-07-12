@@ -1,5 +1,8 @@
 # Aleph - Audiobook Generator
 # Common development commands
+#
+# NOTE: Always use these 'just' commands instead of running 'uv' directly
+# for consistency and to ensure proper environment setup.
 
 # Install dependencies
 install:
@@ -7,7 +10,7 @@ install:
 
 # Install with dev dependencies
 install-dev:
-    uv sync --group dev
+    uv sync --extra dev
 
 # Run the CLI
 run *args:
