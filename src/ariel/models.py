@@ -1,4 +1,4 @@
-"""Pydantic models for Aleph."""
+"""Pydantic models for Ariel."""
 
 from enum import Enum
 from typing import Any

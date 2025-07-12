@@ -1,10 +1,12 @@
-# Aleph - Public Domain Audiobook Converter
+# Ariel - Public Domain Audiobook Converter
 
 ## Project Overview
 
-Aleph transforms public domain books into audiobooks with AI-generated voices
-for different characters. Like Borges' Aleph that contains all other points in
-space, this tool contains all possible voices to bring any text to life.
+Ariel transforms public domain books into audiobooks with AI-generated voices
+for different characters. Like Shakespeare's spirit Ariel, who could transform
+and adapt to any form, this tool transforms written words through a sea-change
+into something rich and strange - bringing text to life with diverse voices
+that emerge from the digital realm to tell their stories.
 
 ---
 
@@ -41,12 +43,12 @@ space, this tool contains all possible voices to bring any text to life.
 
 ### Project Structure
 ```
-aleph/
+ariel/
 ├── pyproject.toml          # Modern Python project file
 ├── uv.lock                 # Lock file from uv
 ├── README.md
 ├── src/
-│   └── aleph/
+│   └── ariel/
 │       ├── __init__.py
 │       ├── __main__.py     # Entry point
 │       ├── cli.py          # Typer CLI definition
@@ -96,7 +98,7 @@ file.
 ### Command Interface
 
 ```bash
-aleph convert <input_file>
+ariel convert <input_file>
 ```
 
 ### Technical Stack
@@ -192,13 +194,13 @@ Support YAML/JSON configuration for:
 
 ```bash
 # Basic usage
-aleph convert <input_file>
+ariel convert <input_file>
 
 # With options
-aleph convert <input_file> --config <config_file> --output <output_file>
+ariel convert <input_file> --config <config_file> --output <output_file>
 
 # Component selection
-aleph convert <input_file> --parser llm --analyzer basic --voice-gen edge-tts
+ariel convert <input_file> --parser llm --analyzer basic --voice-gen edge-tts
 ```
 
 ### Additional Commands

@@ -1,4 +1,4 @@
-# Aleph - Audiobook Generator
+# Ariel - Audiobook Generator
 # Common development commands
 #
 # NOTE: Always use these 'just' commands instead of running 'uv' directly
@@ -14,7 +14,7 @@ install-dev:
 
 # Run the CLI
 run *args:
-    uv run aleph {{args}}
+    uv run ariel {{args}}
 
 # Run linting
 lint:
@@ -38,7 +38,7 @@ test:
 
 # Run tests with coverage
 test-cov:
-    uv run pytest --cov=aleph
+    uv run pytest --cov=ariel
 
 # Run all checks (lint, typecheck, test)
 check: lint typecheck test
@@ -53,7 +53,7 @@ build:
 
 # Convert text to audiobook (example usage)
 convert file="test_input.txt":
-    uv run aleph convert {{file}}
+    uv run ariel convert {{file}}
 
 # Show help
 help:

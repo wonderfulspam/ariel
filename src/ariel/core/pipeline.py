@@ -6,7 +6,7 @@ from typing import Any
 
 from pydub import AudioSegment
 
-from ..models import AudioSegment as AlephAudioSegment
+from ..models import AudioSegment
 from ..models import ProcessingConfig, TextSegment
 from .config import ConfigManager
 from .factory import factory
@@ -133,7 +133,7 @@ class ProcessingPipeline:
 
     async def _generate_audio_segments(
         self, segments: list[TextSegment], characters: list[Character]
-    ) -> list[AlephAudioSegment]:
+    ) -> list[AudioSegment]:
         """Generate audio for all text segments."""
         # Create voice mapping from character analysis
         voice_mapping = {}
@@ -170,7 +170,7 @@ class ProcessingPipeline:
             duration_ms = len(audio_segment_pydub)
 
             # Create audio segment
-            audio_segment = AlephAudioSegment(
+            audio_segment = AudioSegment(
                 audio_data=audio_data,
                 text=segment.text,
                 speaker_type=segment.speaker_type,

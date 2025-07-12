@@ -1,6 +1,6 @@
-"""Entry point for the Aleph CLI."""
+"""Entry point for the Ariel CLI."""
 
-from aleph.cli import app
+from ariel.cli import app
 
 
 def main() -> None:

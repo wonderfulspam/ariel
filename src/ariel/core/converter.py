@@ -11,9 +11,9 @@ from rich.progress import (
     TextColumn,
 )
 
-from aleph.compilers.basic import BasicAudioCompiler
-from aleph.generators.edge_tts import EdgeTTSGenerator
-from aleph.parsers.basic import BasicTextParser
+from ariel.compilers.basic import BasicAudioCompiler
+from ariel.generators.edge_tts import EdgeTTSGenerator
+from ariel.parsers.basic import BasicTextParser
 
 console = Console()
 

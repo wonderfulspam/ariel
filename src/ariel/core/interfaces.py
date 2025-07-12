@@ -1,4 +1,4 @@
-"""Abstract base classes for Aleph components."""
+"""Abstract base classes for Ariel components."""
 
 from abc import ABC, abstractmethod
 from typing import Any

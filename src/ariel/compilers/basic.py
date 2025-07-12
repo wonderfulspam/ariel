@@ -6,7 +6,7 @@ from pathlib import Path
 from pydub import AudioSegment
 
 from ..core.interfaces import AudioCompiler
-from ..models import AudioSegment as AlephAudioSegment
+from ..models import AudioSegment
 
 
 class BasicAudioCompiler(AudioCompiler):
@@ -17,7 +17,7 @@ class BasicAudioCompiler(AudioCompiler):
         self.silence_duration_ms = silence_duration_ms
 
     async def compile_audio(
-        self, segments: list[AlephAudioSegment], output_path: str, **kwargs
+        self, segments: list[AudioSegment], output_path: str, **kwargs
     ) -> str:
         """Compile audio segments into a single output file."""
         if not segments:
@@ -44,7 +44,7 @@ class BasicAudioCompiler(AudioCompiler):
 
         return str(output_file)
 
-    def compile(self, segments: list[AlephAudioSegment], output_path: Path) -> None:
+    def compile(self, segments: list[AudioSegment], output_path: Path) -> None:
         """Compile audio segments into a single output file (backward compatibility)."""
         if not segments:
             raise ValueError("No audio segments to compile")

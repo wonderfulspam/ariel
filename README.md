@@ -1,14 +1,16 @@
-# Aleph - Public Domain Audiobook Converter
+# Ariel - Public Domain Audiobook Converter
 
-Aleph is a command-line tool that transforms public domain books into
+Ariel is a command-line tool that transforms public domain books into
 audiobooks using AI-generated voices.
 
-> "I saw all the mirrors on earth and none of them reflected me... I saw the
-> circulation of my own dark blood; I saw the coupling of love and the
-> modification of death; I saw the Aleph from every point and angle, and in the
-> Aleph I saw the earth and in the earth the Aleph and in the Aleph the earth"
+> "Full fathom five thy father lies;
+> Of his bones are coral made;
+> Those are pearls that were his eyes:
+> Nothing of him that doth fade
+> But doth suffer a sea-change
+> Into something rich and strange."
 >
-> — Jorge Luis Borges, "The Aleph"
+> — Ariel, Act I, Scene 2, The Tempest
 
 This project is a vibe coding experiment mostly relying on the Claude ecosystem,
 primarily Claude Code using Sonnet 4 as well as Opus 4 for high-level

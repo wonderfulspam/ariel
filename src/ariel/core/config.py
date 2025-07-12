@@ -1,4 +1,4 @@
-"""Configuration management for Aleph."""
+"""Configuration management for Ariel."""
 
 import json
 from pathlib import Path
@@ -10,7 +10,7 @@ from pydantic_settings import BaseSettings
 from ..models import ProcessingConfig, VoiceProfile
 
 
-class AlephConfig(BaseSettings):
+class ArielConfig(BaseSettings):
     """Main configuration class with environment variable support."""
 
     # Core pipeline settings
@@ -36,7 +36,7 @@ class AlephConfig(BaseSettings):
     elevenlabs_api_key: str | None = None
 
     class Config:
-        env_prefix = "ALEPH_"
+        env_prefix = "ARIEL_"
         env_file = ".env"
 
 
@@ -45,7 +45,7 @@ class ConfigManager:
 
     def __init__(self, config_file: str | Path | None = None):
         self.config_file = Path(config_file) if config_file else None
-        self._base_config = AlephConfig()
+        self._base_config = ArielConfig()
         self._processing_config: ProcessingConfig | None = None
 
     def load_config(self, config_file: str | Path | None = None) -> ProcessingConfig:
@@ -148,7 +148,7 @@ class ConfigManager:
     def get_default_config_template(self) -> dict[str, Any]:
         """Get a template configuration with comments."""
         return {
-            "# Aleph Configuration": None,
+            "# Ariel Configuration": None,
             "parser_type": "basic",  # basic, advanced, llm
             "analyzer_type": "basic",  # basic, statistical, llm
             "voice_generator_type": "edge-tts",  # edge-tts, openai, elevenlabs

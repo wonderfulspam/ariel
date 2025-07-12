@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "aleph"
+name = "ariel"
 version = "0.1.0"
 description = "Transform public domain books into audiobooks with AI-generated voices"
 readme = "README.md"
@@ -29,7 +29,7 @@ dev = [
 ]
 
 [project.scripts]
-aleph = "aleph.__main__:main"
+ariel = "ariel.__main__:main"
 
 [tool.ruff]
 line-length = 88
@@ -39,7 +39,7 @@ select = ["E", "F", "I", "N", "W", "UP"]
 ignore = ["E501"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["aleph"]
+known-first-party = ["ariel"]
 
 [tool.mypy]
 python_version = "3.12"

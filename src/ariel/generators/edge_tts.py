@@ -8,7 +8,7 @@ import edge_tts
 from pydub import AudioSegment
 
 from ..core.interfaces import VoiceGenerator
-from ..models import AudioSegment as AlephAudioSegment
+from ..models import AudioSegment
 from ..models import SpeakerType, TextSegment
 
 
@@ -42,7 +42,7 @@ class EdgeTTSVoiceGenerator(VoiceGenerator):
 
     async def generate_audio_for_segment(
         self, segment: TextSegment
-    ) -> AlephAudioSegment:
+    ) -> AudioSegment:
         """Generate audio for a text segment (backward compatibility)."""
         voice = self.voice_map.get(segment.speaker_type, "en-US-AriaNeural")
 
@@ -53,7 +53,7 @@ class EdgeTTSVoiceGenerator(VoiceGenerator):
         audio_segment = AudioSegment.from_mp3(audio_io)
         duration_ms = len(audio_segment)
 
-        return AlephAudioSegment(
+        return AudioSegment(
             audio_data=audio_data,
             text=segment.text,
             speaker_type=segment.speaker_type,
@@ -78,7 +78,7 @@ class EdgeTTSVoiceGenerator(VoiceGenerator):
 
     async def generate_multiple(
         self, segments: list[TextSegment]
-    ) -> list[AlephAudioSegment]:
+    ) -> list[AudioSegment]:
         """Generate audio for multiple segments concurrently."""
         tasks = [self.generate_audio_for_segment(segment) for segment in segments]
         return await asyncio.gather(*tasks)

@@ -1,4 +1,4 @@
-"""CLI interface for Aleph audiobook converter."""
+"""CLI interface for Ariel audiobook converter."""
 
 import asyncio
 from pathlib import Path
@@ -13,7 +13,7 @@ from .core.pipeline import ProcessingPipeline
 from .models import ProcessingConfig
 
 app = typer.Typer(
-    name="aleph",
+    name="ariel",
     help="Transform public domain books into audiobooks with AI-generated voices.",
 )
 console = Console()
