@@ -8,10 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "bddgen && playwright test",
-    "test:headed": "bddgen && playwright test --headed",
-    "test:ui": "bddgen && playwright test --ui",
-    "test:debug": "bddgen && playwright test --debug"
+    "test": "bun x bddgen && bun x playwright test",
+    "test:headed": "bun x bddgen && bun x playwright test --headed",
+    "test:ui": "bun x bddgen && bun x playwright test --ui",
+    "test:debug": "bun x bddgen && bun x playwright test --debug"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -30,6 +30,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "msw": "^2.10.4",
     "playwright-bdd": "^8.3.1",
     "playwright-mcp": "^0.0.12",
     "postcss": "^8.5.6",

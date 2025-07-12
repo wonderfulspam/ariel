@@ -34,11 +34,21 @@ Then('I should see the file name displayed', async ({ page }) => {
 });
 
 When('I click {string}', async ({ page }, buttonText: string) => {
+  // Listen for console messages and network requests for debugging
+  page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+  page.on('requestfailed', request => console.log('REQUEST FAILED:', request.url(), request.failure()?.errorText));
+  
   await page.click(`button:has-text("${buttonText}")`);
+  
+  // If this is the analyze button, wait for the API call to complete
+  if (buttonText === 'Analyze Characters') {
+    // Wait for the button text to change back from "Analyzing..." to "Analyze Characters"
+    await expect(page.locator('button:has-text("Analyze Characters")')).toBeVisible({ timeout: 10000 });
+  }
 });
 
 Then('I should see character analysis results', async ({ page }) => {
-  await expect(page.locator('h2:has-text("Character Analysis")')).toBeVisible();
+  await expect(page.locator('h2:has-text("Character Analysis")')).toBeVisible({ timeout: 10000 });
 });
 
 Then('I should see {string} character with voice information', async ({ page }, characterName: string) => {
