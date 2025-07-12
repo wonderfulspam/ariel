@@ -71,6 +71,22 @@ convert file="test_input.txt":
 web port="8000":
     uv run uvicorn ariel.web.app:app --host 0.0.0.0 --port {{port}} --reload
 
+# Jujutsu version control commands
+jj-status:
+    jj status
+
+jj-log n="10":
+    jj log -n {{n}}
+
+jj-new desc="":
+    jj new {{ if desc != "" { "-m '" + desc + "'" } else { "" } }}
+
+jj-describe:
+    jj describe
+
+jj-commit msg:
+    jj commit --message "{{msg}}"
+
 # Show help
 help:
     @just --list
