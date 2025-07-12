@@ -5,11 +5,10 @@ import io
 from typing import Any
 
 import edge_tts
-from pydub import AudioSegment
+from pydub import AudioSegment as PydubAudioSegment
 
 from ..core.interfaces import VoiceGenerator
-from ..models import AudioSegment
-from ..models import SpeakerType, TextSegment
+from ..models import AudioSegment, SpeakerType, TextSegment
 
 
 class EdgeTTSVoiceGenerator(VoiceGenerator):
@@ -50,7 +49,7 @@ class EdgeTTSVoiceGenerator(VoiceGenerator):
 
         # Convert to AudioSegment to get duration
         audio_io = io.BytesIO(audio_data)
-        audio_segment = AudioSegment.from_mp3(audio_io)
+        audio_segment = PydubAudioSegment.from_mp3(audio_io)
         duration_ms = len(audio_segment)
 
         return AudioSegment(

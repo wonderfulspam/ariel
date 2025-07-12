@@ -4,10 +4,9 @@ import io
 from pathlib import Path
 from typing import Any
 
-from pydub import AudioSegment
+from pydub import AudioSegment as PydubAudioSegment
 
-from ..models import AudioSegment
-from ..models import ProcessingConfig, TextSegment
+from ..models import AudioSegment, ProcessingConfig, TextSegment
 from .config import ConfigManager
 from .factory import factory
 from .interfaces import (
@@ -166,7 +165,7 @@ class ProcessingPipeline:
 
             # Calculate duration
             audio_io = io.BytesIO(audio_data)
-            audio_segment_pydub = AudioSegment.from_mp3(audio_io)
+            audio_segment_pydub = PydubAudioSegment.from_mp3(audio_io)
             duration_ms = len(audio_segment_pydub)
 
             # Create audio segment
