@@ -39,9 +39,7 @@ class EdgeTTSVoiceGenerator(VoiceGenerator):
 
         return audio_data
 
-    async def generate_audio_for_segment(
-        self, segment: TextSegment
-    ) -> AudioSegment:
+    async def generate_audio_for_segment(self, segment: TextSegment) -> AudioSegment:
         """Generate audio for a text segment (backward compatibility)."""
         voice = self.voice_map.get(segment.speaker_type, "en-US-AriaNeural")
 

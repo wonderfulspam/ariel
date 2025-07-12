@@ -16,6 +16,21 @@ uv run ruff check .
 uv run aleph convert --help
 ```
 
+### Pre-commit Hooks
+
+This project uses pre-commit hooks to ensure code quality. The hooks automatically run:
+- Code formatting with ruff
+- Linting with ruff
+- Type checking with mypy
+- Basic file checks (trailing whitespace, etc.)
+
+**Setup**: Pre-commit hooks are automatically installed when you run `just install-dev`.
+
+**Manual commands**:
+- `just pre-commit` - Run all pre-commit hooks manually
+- `just pre-commit-install` - Install pre-commit hooks
+- `just pre-commit-update` - Update hook versions
+
 ### Conventional Commits
 
 This project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). All commit messages should adhere to this specification to maintain a clear and descriptive version history.
@@ -25,6 +40,7 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/en/
 - `just install-dev` - Install with development dependencies
 - `just run <args>` - Run the CLI with arguments
 - `just check` - Run all checks (lint, typecheck, test)
+- `just pre-commit` - Run pre-commit hooks manually
 - `just lint` / `just lint-fix` - Linting
 - `just format` - Code formatting
 - `just typecheck` - Type checking

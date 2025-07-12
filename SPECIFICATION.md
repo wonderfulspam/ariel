@@ -83,7 +83,7 @@ file.
 - **Input**: Plain text file (.txt)
 - **Output**: Single audio file (MP3) with distinct voices for narrator and
   dialogue
-- **Processing**: 
+- **Processing**:
   - Distinguish between narrative text and character dialogue
   - Assign different TTS voices to narrator vs characters
   - Generate continuous audio output
@@ -142,7 +142,7 @@ multiple implementations.
 - Input: Raw text
 - Output: List of segments with speaker attribution
 
-#### 2. Character Analyzer  
+#### 2. Character Analyzer
 
 **Purpose**: Identify unique characters and their characteristics
 
@@ -280,7 +280,7 @@ customization.
 ### API Endpoints
 
 - Book upload and management
-- Character retrieval and updates  
+- Character retrieval and updates
 - Voice configuration and preview
 - Audio generation and download
 - Project save/load

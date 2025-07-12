@@ -40,6 +40,18 @@ test:
 test-cov:
     uv run pytest --cov=ariel
 
+# Run pre-commit hooks
+pre-commit:
+    uv run pre-commit run --all-files
+
+# Install pre-commit hooks
+pre-commit-install:
+    uv run pre-commit install
+
+# Update pre-commit hooks
+pre-commit-update:
+    uv run pre-commit autoupdate
+
 # Run all checks (lint, typecheck, test)
 check: lint typecheck test
 
@@ -54,6 +66,10 @@ build:
 # Convert text to audiobook (example usage)
 convert file="test_input.txt":
     uv run ariel convert {{file}}
+
+# Start the web server
+web port="8000":
+    uv run uvicorn ariel.web.app:app --host 0.0.0.0 --port {{port}} --reload
 
 # Show help
 help:

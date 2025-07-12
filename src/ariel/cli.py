@@ -246,5 +246,28 @@ def list_components() -> None:
     console.print(generators_table)
 
 
+@app.command()
+def web(
+    port: int = typer.Option(8000, "--port", "-p", help="Port to run web server on"),
+    host: str = typer.Option("0.0.0.0", "--host", help="Host to bind web server to"),
+) -> None:
+    """Start the web interface."""
+    try:
+        import uvicorn
+        from .web.app import app as web_app
+        
+        console.print(f"[green]Starting web interface...[/green]")
+        console.print(f"[blue]Server will be available at: http://localhost:{port}[/blue]")
+        
+        uvicorn.run(web_app, host=host, port=port, reload=False)
+        
+    except ImportError:
+        console.print("[red]Error: Web dependencies not installed. Run 'uv sync' to install them.[/red]")
+        raise typer.Exit(1)
+    except Exception as e:
+        console.print(f"[red]Error starting web server: {e}[/red]")
+        raise typer.Exit(1)
+
+
 if __name__ == "__main__":
     app()
