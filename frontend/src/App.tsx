@@ -14,21 +14,76 @@ interface AnalysisResult {
   input_length: number
 }
 
+interface ErrorState {
+  message: string
+  type: 'error' | 'warning' | 'info'
+  details?: string
+}
+
 function App() {
   const [file, setFile] = useState<File | null>(null)
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
+  const [error, setError] = useState<ErrorState | null>(null)
+
+  const clearError = () => setError(null)
+
+  const validateFile = (file: File): ErrorState | null => {
+    // Check file type
+    if (!file.name.toLowerCase().endsWith('.txt')) {
+      return {
+        message: 'Invalid file type',
+        type: 'error',
+        details: 'Please select a .txt file. Other formats are not currently supported.'
+      }
+    }
+
+    // Check file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024
+    if (file.size > maxSize) {
+      return {
+        message: 'File too large',
+        type: 'error',
+        details: `File size is ${(file.size / 1024 / 1024).toFixed(1)}MB. Maximum allowed size is 10MB.`
+      }
+    }
+
+    // Check for empty file
+    if (file.size === 0) {
+      return {
+        message: 'Empty file',
+        type: 'error',
+        details: 'The selected file appears to be empty. Please choose a file with text content.'
+      }
+    }
+
+    return null
+  }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] || null
+    
+    if (selectedFile) {
+      const fileError = validateFile(selectedFile)
+      if (fileError) {
+        setError(fileError)
+        setFile(null)
+        return
+      }
+    }
+    
+    clearError()
     setFile(selectedFile)
+    setAnalysisResult(null)
+    setDownloadUrl(null)
   }
 
   const analyzeFile = async () => {
     if (!file) return
 
+    clearError()
     setIsAnalyzing(true)
     const formData = new FormData()
     formData.append('file', file)
@@ -37,17 +92,61 @@ function App() {
       const response = await fetch('http://localhost:8000/analyze', {
         method: 'POST',
         body: formData,
+        signal: AbortSignal.timeout(30000), // 30 second timeout
       })
 
       if (!response.ok) {
-        throw new Error('Analysis failed')
+        let errorMessage = 'Analysis failed'
+        let errorDetails = 'An unexpected error occurred during text analysis.'
+
+        if (response.status === 400) {
+          const errorData = await response.json().catch(() => ({}))
+          errorMessage = 'Invalid file or content'
+          errorDetails = errorData.detail || 'The file format or content is not supported.'
+        } else if (response.status === 413) {
+          errorMessage = 'File too large'
+          errorDetails = 'The selected file is too large to process. Please try a smaller file.'
+        } else if (response.status === 422) {
+          errorMessage = 'Invalid request'
+          errorDetails = 'The file could not be processed. Please check the file format and try again.'
+        } else if (response.status >= 500) {
+          errorMessage = 'Server error'
+          errorDetails = 'The server encountered an error. Please try again later, or check if the backend service is running.'
+        }
+
+        setError({
+          message: errorMessage,
+          type: 'error',
+          details: errorDetails
+        })
+        return
       }
 
       const result = await response.json()
       setAnalysisResult(result)
     } catch (error) {
       console.error('Analysis error:', error)
-      alert('Analysis failed. Make sure the backend server is running.')
+      
+      let errorMessage = 'Analysis failed'
+      let errorDetails = 'An unexpected error occurred.'
+
+      if (error instanceof Error) {
+        if (error.name === 'TimeoutError') {
+          errorMessage = 'Request timeout'
+          errorDetails = 'The analysis took too long to complete. Please try with a smaller file.'
+        } else if (error.message.includes('Failed to fetch')) {
+          errorMessage = 'Connection failed'
+          errorDetails = 'Unable to connect to the server. Please check your internet connection and ensure the backend service is running.'
+        } else {
+          errorDetails = error.message
+        }
+      }
+
+      setError({
+        message: errorMessage,
+        type: 'error',
+        details: errorDetails
+      })
     } finally {
       setIsAnalyzing(false)
     }
@@ -56,6 +155,7 @@ function App() {
   const generateAudiobook = async () => {
     if (!file) return
 
+    clearError()
     setIsGenerating(true)
     const formData = new FormData()
     formData.append('file', file)
@@ -64,18 +164,73 @@ function App() {
       const response = await fetch('http://localhost:8000/generate', {
         method: 'POST',
         body: formData,
+        signal: AbortSignal.timeout(120000), // 2 minute timeout for audio generation
       })
 
       if (!response.ok) {
-        throw new Error('Generation failed')
+        let errorMessage = 'Audio generation failed'
+        let errorDetails = 'An unexpected error occurred during audio generation.'
+
+        if (response.status === 400) {
+          const errorData = await response.json().catch(() => ({}))
+          errorMessage = 'Invalid file or content'
+          errorDetails = errorData.detail || 'The file cannot be converted to audio. Please check the file content.'
+        } else if (response.status === 422) {
+          errorMessage = 'Processing error'
+          errorDetails = 'The text could not be processed for audio generation. Please check the file content.'
+        } else if (response.status === 500) {
+          errorMessage = 'Text-to-speech service error'
+          errorDetails = 'The audio generation service is currently unavailable. This may be due to high demand or a temporary service outage. Please try again in a few minutes.'
+        } else if (response.status === 503) {
+          errorMessage = 'Service temporarily unavailable'
+          errorDetails = 'The audio generation service is temporarily overloaded. Please try again in a few minutes.'
+        }
+
+        setError({
+          message: errorMessage,
+          type: response.status === 500 ? 'warning' : 'error',
+          details: errorDetails
+        })
+        return
       }
 
       const blob = await response.blob()
+      
+      // Validate the response is actually audio
+      if (blob.size === 0) {
+        setError({
+          message: 'Empty audio file',
+          type: 'error',
+          details: 'The generated audio file is empty. Please try again or contact support.'
+        })
+        return
+      }
+
       const url = URL.createObjectURL(blob)
       setDownloadUrl(url)
     } catch (error) {
       console.error('Generation error:', error)
-      alert('Generation failed. Check the console for details.')
+      
+      let errorMessage = 'Audio generation failed'
+      let errorDetails = 'An unexpected error occurred.'
+
+      if (error instanceof Error) {
+        if (error.name === 'TimeoutError') {
+          errorMessage = 'Generation timeout'
+          errorDetails = 'Audio generation took too long to complete. This may happen with longer texts. Please try with a shorter text or try again later.'
+        } else if (error.message.includes('Failed to fetch')) {
+          errorMessage = 'Connection failed'
+          errorDetails = 'Unable to connect to the server. Please check your internet connection and ensure the backend service is running.'
+        } else {
+          errorDetails = error.message
+        }
+      }
+
+      setError({
+        message: errorMessage,
+        type: error instanceof Error && error.name === 'TimeoutError' ? 'warning' : 'error',
+        details: errorDetails
+      })
     } finally {
       setIsGenerating(false)
     }
@@ -92,6 +247,38 @@ function App() {
             Transform your stories into audiobooks with AI-generated character voices
           </p>
         </header>
+
+        {/* Error Display */}
+        {error && (
+          <div className={`mb-6 p-4 rounded-lg border ${
+            error.type === 'error' 
+              ? 'bg-red-50 border-red-200 text-red-800' 
+              : error.type === 'warning'
+              ? 'bg-yellow-50 border-yellow-200 text-yellow-800'
+              : 'bg-blue-50 border-blue-200 text-blue-800'
+          }`}>
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
+                <div className="flex items-center mb-2">
+                  <span className="text-lg mr-2">
+                    {error.type === 'error' ? '❌' : error.type === 'warning' ? '⚠️' : 'ℹ️'}
+                  </span>
+                  <h3 className="font-semibold">{error.message}</h3>
+                </div>
+                {error.details && (
+                  <p className="text-sm opacity-90">{error.details}</p>
+                )}
+              </div>
+              <button
+                onClick={clearError}
+                className="ml-4 text-gray-400 hover:text-gray-600 transition-colors"
+                aria-label="Dismiss error"
+              >
+                <span className="text-xl">×</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* File Upload Section */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">

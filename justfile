@@ -178,6 +178,9 @@ test-e2e:
 test-ui:
     cd frontend && bun run bddgen && bun x playwright test --grep "Audiobook Converter Web Interface" --reporter list
 
+test-errors:
+    cd frontend && bun run bddgen && bun x playwright test --grep "Error Handling and Resilience" --reporter list
+
 # Run tests with UI mode for debugging
 test-bdd-ui:
     cd frontend && bun run bddgen && bun x playwright test --ui
