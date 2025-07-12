@@ -62,7 +62,14 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/en/
 - **Runtime**: Bun (3-10x faster package management)
 - **Framework**: Vite + React 18 (lightning-fast dev server)
 - **Styling**: Tailwind CSS (utility-first, rapid development)
-- **Testing**: Playwright with BDD (when implemented)
+- **Testing**: Playwright + BDD with Gherkin feature files
+
+### Testing Strategy
+- **BDD (Behavior-Driven Development)**: Feature files written in Gherkin
+- **End-to-End Testing**: Playwright for real browser automation
+- **Cross-Browser**: Tests run on Chrome, Firefox, Safari, and mobile
+- **Visual Testing**: Screenshot comparisons and responsive design validation
+- **API Mocking**: MSW (Mock Service Worker) for backend independence
 
 ### Key Features
 - Component swapping via CLI flags or config files
@@ -95,9 +102,12 @@ just run web --port 8080
 
 # Frontend Development (Vite + Bun)
 cd frontend
-bun dev        # Start development server (very fast!)
-bun build      # Build for production
-bun test       # Run tests (when added)
+bun dev              # Start development server (very fast!)
+bun build            # Build for production
+bun test             # Run BDD tests with Playwright
+bun run test:headed  # Run tests with browser UI
+bun run test:ui      # Run tests with Playwright UI
+bun run test:debug   # Debug tests step by step
 ```
 
 ## 🔧 Development Workflow
