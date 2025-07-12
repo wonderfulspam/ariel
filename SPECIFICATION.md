@@ -231,6 +231,47 @@ ariel convert <input_file> --parser llm --analyzer basic --voice-gen edge-tts
 Create a web-based interface for interactive audiobook creation and voice
 customization.
 
+### Frontend Technology Decisions
+
+**Runtime & Package Manager**: Bun
+- Ultra-fast JavaScript runtime, bundler, and package manager
+- 3x faster than npm/yarn for package installation
+- Built-in TypeScript support with zero configuration
+- Native ESM support and excellent performance
+- Drop-in replacement for Node.js with better compatibility
+
+**Framework**: Vite + React 18
+- Lightning-fast development server with HMR
+- Native ESM and modern build tooling
+- Instant server start and sub-second hot reloads
+- Excellent TypeScript integration out of the box
+- Smaller bundle sizes and better performance than Next.js for our use case
+
+**Styling**: Tailwind CSS + shadcn/ui
+- Utility-first CSS framework for rapid development
+- shadcn/ui provides high-quality, accessible components
+- Consistent design system with dark/light mode support
+- Easy customization and themability
+
+**Testing**: Playwright with BDD
+- playwright-bdd for behavior-driven testing specifications
+- playwright-mcp for AI-assisted debugging and interaction
+- End-to-end testing with real browser automation
+- Works well with TypeScript and modern frameworks
+
+**Development Setup**:
+- Bun for package management and script running
+- Vite for development server and building
+- TypeScript with strict mode for type safety
+- ESLint and Prettier for code quality
+- Integration with existing pre-commit hooks
+
+**Performance Benefits**:
+- Package installation: 3-10x faster with Bun
+- Development server: ~10x faster startup with Vite
+- Hot reloading: Sub-100ms updates vs 1-3s with webpack
+- Build times: 5-10x faster production builds
+
 ### Core Features
 
 #### Book Management

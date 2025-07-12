@@ -52,11 +52,17 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/en/
 
 ## 🏗️ Architecture Overview
 
-### Modular Components
+### Backend Components (Python)
 - **TextParser**: `basic`, `advanced` - Parse text into segments
 - **CharacterAnalyzer**: `basic`, `statistical` - Analyze characters and assign voices
 - **VoiceGenerator**: `edge-tts` - Generate audio from text
 - **AudioCompiler**: `basic` - Combine audio segments
+
+### Frontend Stack (TypeScript)
+- **Runtime**: Bun (3-10x faster package management)
+- **Framework**: Vite + React 18 (lightning-fast dev server)
+- **Styling**: Tailwind CSS (utility-first, rapid development)
+- **Testing**: Playwright with BDD (when implemented)
 
 ### Key Features
 - Component swapping via CLI flags or config files
@@ -64,6 +70,7 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/en/
 - Dry-run mode for testing
 - Rich CLI output with progress indicators
 - Character profiling with voice assignment
+- Modern web interface with real-time updates
 
 ## 🧪 Testing Commands
 
@@ -85,6 +92,12 @@ just run preview test_input.txt --segments 3
 just web
 # or with custom port
 just run web --port 8080
+
+# Frontend Development (Vite + Bun)
+cd frontend
+bun dev        # Start development server (very fast!)
+bun build      # Build for production
+bun test       # Run tests (when added)
 ```
 
 ## 🔧 Development Workflow
