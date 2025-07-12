@@ -4,37 +4,37 @@ import { test } from "playwright-bdd";
 test.describe('Audiobook Converter Web Interface', () => {
 
   test.beforeEach('Background', async ({ Given, page, And }) => {
-    await Given('the backend API is running', null, { page });
-    await And('I am on the audiobook converter page', null, { page });
+    await Given('the backend API is running', null, { page }); 
+    await And('I am on the audiobook converter page', null, { page }); 
+  });
+  
+  test('Upload and analyze a text file', async ({ When, page, Then, And }) => { 
+    await When('I upload a text file "simple_test.txt"', null, { page }); 
+    await Then('I should see the file name displayed', null, { page }); 
+    await When('I click "Analyze Characters"', null, { page }); 
+    await Then('I should see character analysis results', null, { page }); 
+    await And('I should see "narrator" character with voice information', null, { page }); 
   });
 
-  test('Upload and analyze a text file', async ({ When, page, Then, And }) => {
-    await When('I upload a text file "simple_test.txt"', null, { page });
-    await Then('I should see the file name displayed', null, { page });
-    await When('I click "Analyze Characters"', null, { page });
-    await Then('I should see character analysis results', null, { page });
-    await And('I should see "narrator" character with voice information', null, { page });
+  test('Generate audiobook from analyzed text', async ({ Given, page, When, Then, And }) => { 
+    await Given('I have uploaded and analyzed a text file', null, { page }); 
+    await When('I click "Generate Audiobook"', null, { page }); 
+    await Then('I should see "Generating Audiobook..." message', null, { page }); 
+    await And('I should eventually see "Audiobook Ready!" message', null, { page }); 
+    await And('I should see a download link for the audiobook', null, { page }); 
   });
 
-  test('Generate audiobook from analyzed text', async ({ Given, page, When, Then, And }) => {
-    await Given('I have uploaded and analyzed a text file', null, { page });
-    await When('I click "Generate Audiobook"', null, { page });
-    await Then('I should see "Generating Audiobook..." message', null, { page });
-    await And('I should eventually see "Audiobook Ready!" message', null, { page });
-    await And('I should see a download link for the audiobook', null, { page });
+  test('Handle upload errors gracefully', async ({ When, page, Then, And }) => { 
+    await When('I try to upload an invalid file type', null, { page }); 
+    await Then('I should see an error message', null, { page }); 
+    await And('the analyze button should not be enabled', null, { page }); 
   });
 
-  test('Handle upload errors gracefully', async ({ When, page, Then, And }) => {
-    await When('I try to upload an invalid file type', null, { page });
-    await Then('I should see an error message', null, { page });
-    await And('the analyze button should not be enabled', null, { page });
-  });
-
-  test('Responsive design works on mobile', async ({ Given, page, Then, And }) => {
-    await Given('I am viewing the page on a mobile device', null, { page });
-    await Then('the interface should be responsive', null, { page });
-    await And('all buttons should be easily clickable', null, { page });
-    await And('the text should be readable', null, { page });
+  test('Responsive design works on mobile', async ({ Given, page, Then, And }) => { 
+    await Given('I am viewing the page on a mobile device', null, { page }); 
+    await Then('the interface should be responsive', null, { page }); 
+    await And('all buttons should be easily clickable', null, { page }); 
+    await And('the text should be readable', null, { page }); 
   });
 
 });

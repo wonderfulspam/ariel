@@ -20,6 +20,12 @@ if static_path.exists():
 pipeline = ProcessingPipeline()
 
 
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for container orchestration."""
+    return {"status": "healthy", "service": "ariel-backend"}
+
+
 @app.get("/", response_class=HTMLResponse)
 async def home():
     """Serve the main web interface."""

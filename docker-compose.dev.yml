@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app:cached
+      - backend-cache:/tmp/uv-cache
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    command: ["uv", "run", "uvicorn", "ariel.web.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app:cached
+      - frontend-node-modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: ["bun", "run", "dev", "--host", "0.0.0.0"]
+
+  # Test service for running frontend tests
+  frontend-test:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./frontend:/app:cached
+      - frontend-node-modules:/app/node_modules
+    environment:
+      - NODE_ENV=test
+    profiles:
+      - testing
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  backend-cache:
+  frontend-node-modules:
