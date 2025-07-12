@@ -13,7 +13,7 @@ just check
 
 # ❌ Avoid
 uv run ruff check .
-uv run aleph convert --help
+uv run ariel convert --help
 ```
 
 ### Pre-commit Hooks
@@ -126,7 +126,7 @@ bun run test:debug   # Debug tests step by step
 ## 📁 Key Files
 
 - `justfile` - Development commands
-- `src/aleph/core/pipeline.py` - Main processing pipeline
-- `src/aleph/core/interfaces.py` - Abstract base classes
-- `src/aleph/core/factory.py` - Component factory
-- `src/aleph/cli.py` - Command-line interface
+- `src/ariel/core/pipeline.py` - Main processing pipeline
+- `src/ariel/core/interfaces.py` - Abstract base classes
+- `src/ariel/core/factory.py` - Component factory
+- `src/ariel/cli.py` - Command-line interface
