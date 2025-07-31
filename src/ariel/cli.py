@@ -35,7 +35,7 @@ def convert(
         None, "--analyzer", help="Character analyzer to use (basic, statistical)"
     ),
     voice_gen: str | None = typer.Option(
-        None, "--voice-gen", help="Voice generator to use (edge-tts)"
+        None, "--voice-gen", help="Voice generator to use (edge-tts, openai, coqui)"
     ),
     dry_run: bool = typer.Option(
         False, "--dry-run", help="Analyze text without generating audio"
@@ -236,6 +236,8 @@ def list_components() -> None:
     for generator in factory.list_generators():
         description = {
             "edge-tts": "Microsoft Edge Text-to-Speech (free)",
+            "openai": "OpenAI Text-to-Speech (commercial, high quality)",
+            "coqui": "Coqui TTS (open-source, local processing)",
         }.get(generator, "Custom generator")
         generators_table.add_row(generator, description)
 

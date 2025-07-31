@@ -1,5 +1,7 @@
 """Component factory for creating parser, analyzer, generator, and compiler instances."""
 
+import os
+
 from ..core.interfaces import (
     AudioCompiler,
     CharacterAnalyzer,
@@ -37,8 +39,12 @@ class ComponentFactory:
 
         # Voice Generators
         from ..generators.edge_tts import EdgeTTSVoiceGenerator
+        from ..generators.openai_tts import OpenAITTSVoiceGenerator
+        from ..generators.coqui_tts import CoquiTTSVoiceGenerator
 
         self.register_generator("edge-tts", EdgeTTSVoiceGenerator)
+        self.register_generator("openai", OpenAITTSVoiceGenerator)
+        self.register_generator("coqui", CoquiTTSVoiceGenerator)
 
         # Audio Compilers
         from ..compilers.basic import BasicAudioCompiler
@@ -92,7 +98,18 @@ class ComponentFactory:
             )
 
         generator_class = self._generators[generator_type]
-        return generator_class(**kwargs)
+
+        # Handle generator-specific configuration
+        if generator_type == "openai":
+            # Pass OpenAI API key from environment or kwargs
+            api_key = kwargs.get("api_key") or os.getenv("ARIEL_OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
+            return generator_class(api_key=api_key)
+        elif generator_type == "coqui":
+            # Pass Coqui model configuration
+            model_name = kwargs.get("model_name") or os.getenv("ARIEL_COQUI_MODEL_NAME")
+            return generator_class(model_name=model_name)
+        else:
+            return generator_class(**kwargs)
 
     def create_compiler(self, compiler_type: str, **kwargs) -> AudioCompiler:
         """Create an audio compiler instance."""

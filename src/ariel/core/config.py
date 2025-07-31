@@ -31,9 +31,13 @@ class ArielConfig(BaseSettings):
     max_concurrent_generations: int = 5
     audio_quality: str = "standard"  # low, standard, high
 
-    # API settings (for future TTS engines)
+    # API settings for TTS engines
     openai_api_key: str | None = None
     elevenlabs_api_key: str | None = None
+
+    # Coqui TTS settings
+    coqui_model_name: str = "tts_models/en/ljspeech/tacotron2-DDC"
+    coqui_cache_dir: str | None = None
 
     class Config:
         env_prefix = "ARIEL_"
@@ -151,7 +155,7 @@ class ConfigManager:
             "# Ariel Configuration": None,
             "parser_type": "basic",  # basic, advanced, llm
             "analyzer_type": "basic",  # basic, statistical, llm
-            "voice_generator_type": "edge-tts",  # edge-tts, openai, elevenlabs
+            "voice_generator_type": "edge-tts",  # edge-tts, openai, coqui
             "compiler_type": "basic",  # basic, chapter-aware
             "output_format": "mp3",  # mp3, wav, m4a
             "voice_mappings": {
