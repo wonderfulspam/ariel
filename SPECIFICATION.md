@@ -13,6 +13,10 @@ that emerge from the digital realm to tell their stories.
 
 ## Iteration 1a: Proof of Concept
 
+### Status: Complete
+
+This iteration is fully implemented and has been superseded by the more flexible architecture in Iteration 1b.
+
 ### Objective
 
 Build the simplest possible system that produces a working audiobook from a text
@@ -61,6 +65,17 @@ ariel convert <input_file>
 ---
 
 ## Iteration 1b: Enhanced CLI with Flexible Architecture
+
+### Status: Mostly Complete
+
+The core architecture is in place, with a modular, factory-based system for pipeline components.
+
+-   **Text Parsers**: `BasicTextParser` and `AdvancedTextParser` are implemented.
+-   **Character Analyzers**: `BasicCharacterAnalyzer` and `StatisticalCharacterAnalyzer` are implemented.
+-   **Voice Generators**: Only `EdgeTTSVoiceGenerator` is implemented. **Missing:** Implementations for OpenAI, ElevenLabs, or other specified alternatives.
+-   **Audio Compilers**: `BasicAudioCompiler` is implemented.
+-   **Configuration**: A robust `ConfigManager` is in place, supporting file-based and environment variable configuration.
+-   **CLI**: The CLI supports component selection and other features.
 
 ### Objective
 
@@ -165,6 +180,14 @@ ariel convert <input_file> --parser llm --analyzer basic --voice-gen edge-tts
 ---
 
 ## Iteration 2: Web Interface
+
+### Status: In Progress
+
+A significant portion of the web interface has been developed.
+
+-   **Backend**: A FastAPI application (`src/ariel/web/app.py`) provides endpoints for file analysis, audiobook generation, and listing available voices. It is integrated with the core processing pipeline.
+-   **Frontend**: A React application (`frontend/src/App.tsx`) provides a user interface for uploading text files, viewing character analysis results, generating, and downloading the final audiobook.
+-   **Missing Features**: The current web interface does not yet support interactive voice customization, real-time progress updates, or project management.
 
 ### Objective
 
