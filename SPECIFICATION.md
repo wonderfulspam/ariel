@@ -47,7 +47,7 @@ ariel convert <input_file>
 
 ### Technical Stack
 
-- **Python**: 3.12 (good balance of features and stability, avoiding 3.13 until
+- **Python**: 3.11 (good balance of features and stability, avoiding 3.12 and 3.13 until
   ecosystem catches up)
 - **Package Manager**: `uv` for faster, more reliable dependency resolution
 - **Project Management**: Use `pyproject.toml` instead of `setup.py`

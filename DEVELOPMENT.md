@@ -157,11 +157,11 @@ bun run test:debug   # Debug tests step by step
 
 ### Language and Runtime
 
-- **Python 3.12**: Latest stable version with good ecosystem support
+- **Python 3.11**: Second-latest stable version with good ecosystem support
   - Pattern matching (match/case) for cleaner code
   - Better error messages
   - Performance improvements
-  - Avoid 3.13 until libraries catch up
+  - Avoid 3.12 and 3.13 until libraries catch up
 
 ### Development Tools
 
