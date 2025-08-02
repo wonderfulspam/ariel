@@ -1,5 +1,0 @@
-"Hello, world!" said Alice cheerfully.
-
-The narrator explained that this was just a simple test.
-
-"Indeed," replied Bob with a smile.
