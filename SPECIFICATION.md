@@ -66,16 +66,19 @@ ariel convert <input_file>
 
 ## Iteration 1b: Enhanced CLI with Flexible Architecture
 
-### Status: Mostly Complete
+### Status: Complete ✅
 
-The core architecture is in place, with a modular, factory-based system for pipeline components.
+The core architecture is fully implemented with a modular, factory-based system for pipeline components.
 
 -   **Text Parsers**: `BasicTextParser` and `AdvancedTextParser` are implemented.
 -   **Character Analyzers**: `BasicCharacterAnalyzer` and `StatisticalCharacterAnalyzer` are implemented.
--   **Voice Generators**: Only `EdgeTTSVoiceGenerator` is implemented. **Missing:** Implementations for OpenAI, ElevenLabs, or other specified alternatives.
+-   **Voice Generators**: All required implementations are complete:
+    -   `EdgeTTSVoiceGenerator` - Microsoft Edge TTS (free, no API key required)
+    -   `OpenAITTSVoiceGenerator` - OpenAI TTS API (commercial, high quality)
+    -   `CoquiTTSVoiceGenerator` - Coqui TTS (open-source, local processing)
 -   **Audio Compilers**: `BasicAudioCompiler` is implemented.
 -   **Configuration**: A robust `ConfigManager` is in place, supporting file-based and environment variable configuration.
--   **CLI**: The CLI supports component selection and other features.
+-   **CLI**: The CLI supports component selection and all specified features.
 
 ### Objective
 
